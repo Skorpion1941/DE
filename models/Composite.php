@@ -1,0 +1,59 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "composite".
+ *
+ * @property int $id
+ * @property string $name
+ * @property float $price
+ *
+ * @property OrderComposite[] $orderComposites
+ */
+class Composite extends \yii\db\ActiveRecord
+{
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'composite';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'price'], 'required'],
+            [['price'], 'number'],
+            [['name'], 'string', 'max' => 255],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'price' => 'Price',
+        ];
+    }
+
+    /**
+     * Gets query for [[OrderComposites]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderComposites()
+    {
+        return $this->hasMany(OrderComposite::class, ['composite_id' => 'id']);
+    }
+}
